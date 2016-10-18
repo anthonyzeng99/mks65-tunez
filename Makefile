@@ -1,5 +1,5 @@
 all:
-	gcc SongList.c Tunez.c -o Tunez
+	gcc SongList.c -o SongList
 
 run: tunez
 	./Tunez

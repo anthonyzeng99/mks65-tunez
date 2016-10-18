@@ -12,6 +12,10 @@ song_node * insert_front(song_node *n, char *name, char *artist);
 
 song_node * insert_in_order(song_node *first_node, char *name, char *artist);
 
+int check_insertion_point(song_node *current_node, song_node *node_to_insert);
+
+void print_listHelper(song_node *node, int ctr);
+
 void print_list(song_node *n);
 
 song_node * find_song(song_node *first_node, char *name);
