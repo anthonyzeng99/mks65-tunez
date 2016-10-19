@@ -94,18 +94,19 @@ song_node * random_song(song_node *first_node) {
   } return current_node;
 }
 
-song_node * remove_song(song_node *first_node, song_node *node_to_remove) {
+int remove_song(song_node *first_node, char *name, char *artist ) {
   song_node *current_node = first_node;
   song_node *previous_node = 0;
   while (current_node -> next) {
-    if (current_node == node_to_remove) {
+    if (!strcmp(current_node -> name, name) && !strcmp(current_node -> artist, artist)) {
       previous_node -> next = current_node -> next;
       free(current_node);
-      return previous_node -> next;
+      return 1;
     };
-    previous_node  = current_node;
+    previous_node = current_node;
     current_node = current_node -> next;
   }
+  return 0;
 }
 
 void free_list(song_node *first_node) {
@@ -117,26 +118,26 @@ void free_list(song_node *first_node) {
 }
 
 int main() {
-  song_node *a = (song_node *) malloc(sizeof(song_node));
-  strcpy(a -> name, "Shut and Dance");
-  strcpy(a -> artist, "Walk the Moon");
-  song_node *b = (song_node *) malloc(sizeof(song_node));
-  strcpy(b -> name, "Fireflies");
-  strcpy(b -> artist, "Owl City");
-  song_node *c = (song_node *) malloc(sizeof(song_node));
-  strcpy(c -> name, "Let It Go");
-  strcpy(c -> artist, "Idina Menzel");
-  song_node *d = (song_node *) malloc(sizeof(song_node));
-  strcpy(d -> name, "Defying Gravity");
-  strcpy(d -> artist, "Idina Menzel");
 
   //print_list(a);
+
+  song_node *a = (song_node *) malloc(sizeof(song_node));
+  strcpy(a -> name, "Shut Up and Dance");
+  strcpy(a -> artist, "Walk the Moon");
+  
+  printf("\nSongList Tests:\n");
+
   song_node *front = insert_front(a, "Fireflies", "Owl City");
+
   front = insert_in_order(front, "Defying Gravity", "Idina Menzel");
   front = insert_in_order(front, "Let It Go", "Idina Menzel"); 
   front = insert_in_order(front, "Payphone", "Maroon 5"); 
   front = insert_in_order(front, "Sugar", "Maroon 5"); 
   front = insert_in_order(front, "Animals", "Maroon 5"); 
   print_list(front);
- 
+
+  remove_song(front, "Let It Go", "Idina Menzel");
+
+  print_list(front);
+  
 }

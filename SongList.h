@@ -24,7 +24,7 @@ song_node * find_song_by_artist(song_node *first_node, char *artist);
 
 song_node * random_song(song_node *first_node);
 
-song_node * remove_song(song_node *first_node, song_node *node_to_remove);
+int remove_song(song_node *first_node, char *name, char *artist);
 
 void free_list();
 
