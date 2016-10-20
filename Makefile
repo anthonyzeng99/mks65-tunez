@@ -1,8 +1,8 @@
 all:
-	gcc song_list.c -o song_list
+	gcc main.c song_list.c song_library.c -o tunez
 
 run: tunez
-	./Tunez
+	./tunez
 
 clean:
 	rm *~

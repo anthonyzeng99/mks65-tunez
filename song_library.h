@@ -1,7 +1,7 @@
 #ifndef SONG_LIBRARY_H
 #define SONG_LIBRARY_H
 
-int letter_to_index(char letter);
+int letter_to_index(char *letter);
 
 song_node * add_song(song_node *library, char *name, char *artist);
 
@@ -13,7 +13,7 @@ void print_letter_song(song_node *library, char letter);
 
 void print_library(song_node *library);
 
-void print_shuffle(song_node *library);
+void print_shuffle(song_node *library, int num_songs);
 
 song_node *  delete_song(song_node *library, char *name, char *artist);
 
