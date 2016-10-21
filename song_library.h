@@ -1,22 +1,26 @@
 #ifndef SONG_LIBRARY_H
 #define SONG_LIBRARY_H
 
+void initialize_library();
+
 int letter_to_index(char *letter);
 
-song_node * add_song(song_node *library, char *name, char *artist);
+int index_to_letter(char index);
 
-song_node * search_for_song(song_node *library, char *name);
+song_node * add_song(char *name, char *artist);
 
-song_node * search_for_artist(song_node *library, char *artist);
+song_node * search_for_song(char *name);
 
-void print_letter_song(song_node *library, char letter);
+song_node * search_for_artist(char *artist);
 
-void print_library(song_node *library);
+void print_letter_song(char *letter);
 
-void print_shuffle(song_node *library, int num_songs);
+void print_library();
 
-song_node *  delete_song(song_node *library, char *name, char *artist);
+void print_shuffle(int num_songs);
 
-song_node * delete_library(song_node *library);
+song_node *  delete_song(char *name, char *artist);
+
+song_node * delete_library();
 
 #endif

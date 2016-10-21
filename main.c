@@ -6,34 +6,54 @@
 #include "song_library.h"
 
 int main() {
+    
+  initialize_library();
+
+  //Add songs to library
+  printf("\nInserting songs:\n");
+  add_song("Bohemian Rhapsody", "Queen");
+  add_song("Under Pressure", "Queen");
+  add_song("We Are The Champions", "Queen");
+  add_song("Let It Go", "Idina Menzel");
+  add_song("Defying Gravity", "Idina Menzel");
+  add_song("Shut Up and Dance", "Walk the Moon");
+  add_song("Payphone", "Maroon 5"); 
+  add_song("Sugar", "Maroon 5"); 
+  add_song("Animals", "Maroon 5"); 
+  add_song("Apoligize", "OneRepublic");
+  add_song("Feel Again", "OneRepublic");
+  add_song("Kids", "OneRepublic");
+  add_song("Fireflies", "Owl City");
   
-  //print_list(a);
+  //Print library
+  printf("Printing library:\n");
+  print_library();
 
-  song_node *a = (song_node *) malloc(sizeof(song_node));
-  strcpy(a -> name, "Shut Up and Dance");
-  strcpy(a -> artist, "Walk the Moon");
-  
-  printf("\nSongList Tests:\n");
+  //Print M Songs
+  printf("\nPrint 'm' songs\n");
+  print_letter_song("m");
 
-  song_node *front = insert_front(a, "Fireflies", "Owl City");
+  //Print M Songs
+  printf("\nPrint 3 shuffle songs\n");
+  print_shuffle(3);
 
-  front = insert_in_order(front, "Defying Gravity", "Idina Menzel");
-  front = insert_in_order(front, "Let It Go", "Idina Menzel"); 
-  front = insert_in_order(front, "Payphone", "Maroon 5"); 
-  front = insert_in_order(front, "Sugar", "Maroon 5"); 
-  front = insert_in_order(front, "Animals", "Maroon 5"); 
-  print_list(front);
+  //Search for Song
+  printf("\nSearching for 'Fireflies'\n");
+  song_node *song_found = search_for_song("Shut Up and Dance");
+  printf("Song found: %s - %s\n", song_found -> name, song_found -> artist);
 
-  song_node *random_node = random_song(front);
-  printf("\nrandom name:%s\nrandom artist:%s\n", random_node -> name,  random_node -> artist);
+  //Search for Song by Artist
+  printf("\nSearching for 'Maroon 5'\n");
+  song_node *song_found2 = search_for_artist("Maroon 5");
+  printf("Song found: %s - %s\n", song_found2 -> name, song_found2 -> artist);
 
-  song_node *artist_found = find_song_by_artist(front, "Walk the Moon");
-  printf("\nsong found name:%s\nsong found artist:%s\n", artist_found -> name,  artist_found -> artist);
-
-
-  front = remove_song(front, "Let It Go", "Idina Menzel");
-  front = remove_song(front, "Defying Gravity", "Idina Menzel");
-  front = remove_song(front, "Fireflies", "Owl City");
-  front = remove_song(front, "Shut Up and Dance", "Walk the Moon");
-  print_list(front);
-}
+  //Delete songs
+  printf("\nDeleting songs 'Defying Gravity' and 'Feel Again'\n");
+  delete_song("Defying Gravity", "Idina Menzel");
+  delete_song("Feel Again", "OneRepublic");
+  print_library();
+  ;
+  //Delete library
+  printf("\nDeleting library:\n");
+  delete_library();
+  }

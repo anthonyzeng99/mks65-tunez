@@ -44,13 +44,13 @@ int check_insertion_point(song_node *current_node, song_node *node_to_insert) {
   } else if (strcmp(current_node -> artist, node_to_insert -> artist) == 0) {
     if (strcmp(current_node -> name, node_to_insert -> name)  > 0) {
       return 1;
-    }
+    } 
   }
   return 0;
 }
 
 void print_list_helper(song_node *node, int ctr) {
-  printf("%d:%s - %s\n", ctr, node -> name, node-> artist);
+  printf(" %d:%s - %s\n", ctr, node -> name, node-> artist);
   song_node *next = node -> next;
   if (next) {
     print_list_helper(next, ctr + 1);

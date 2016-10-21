@@ -6,7 +6,23 @@
 #include "song_list.h"
 #include "song_library.h"
 
-song_node *table[26];
+song_node *table[26]; 
+
+void initialize_library(){
+  int i = 0;
+  for (; i < 26; i++) {
+    table[i] = (song_node*) malloc(sizeof(song_node));
+    strcpy(table[i] -> name, "");
+    strcpy(table[i] -> artist, "");
+  }
+}
+
+int list_is_empty(song_node *node) {
+  if (strcmp(node -> artist, "") == 0) {
+    return 0;
+  }
+  return 1;
+}
 
 int letter_to_index(char *letter) {
   if (*letter >= 65 && *letter <= 90) {
@@ -17,59 +33,81 @@ int letter_to_index(char *letter) {
   return;
 }
 
-song_node * add_song(song_node *library, char *name, char *artist) {
-  song_node *node_to_insert_at = table[letter_to_index(&artist[0])];
-  return insert_in_order(node_to_insert_at, name, artist);
+int index_to_letter(char index) {
+  return index + 65;
 }
 
-song_node * search_for_song(song_node *library, char *name) {
+song_node * add_song(char *name, char *artist) {
+  song_node *song_list = table[letter_to_index(&artist[0])];
+  if (!list_is_empty(song_list)) {
+    strcpy(song_list -> name, name);
+    strcpy(song_list -> artist, artist);
+    table[letter_to_index(&artist[0])] = song_list;
+    return song_list;
+  }
+  table[letter_to_index(&artist[0])] = insert_in_order(song_list, name, artist);
+  return song_list;
+}
+
+song_node * search_for_song(char *name) {
   int index = 0;
   while (index < 26) {
     song_node *search_result = find_song(table[index], name);
-    if (!search_result) {
-      return search_result;
-    }
-    index++;
+    if (search_result != 0) {
+	  return search_result;
+      }
+      index++;
   }
+  
   return 0;
 }
 
-song_node * search_for_artist(song_node *library, char *artist) {
+song_node * search_for_artist(char *artist) {
   song_node *node_to_search = table[letter_to_index(&artist[0])];
   return find_song_by_artist(node_to_search, artist);
 }
 
-void print_letter_song(song_node *library, char letter) {
-  song_node *node_to_print = table[letter_to_index(&letter)];
+void print_letter_song(char *letter) {
+  song_node *node_to_print = table[letter_to_index(letter)];
   print_list(node_to_print);
 }
 
-void print_library(song_node *library) {
+void print_library() {
   int index = 0;
   while (index < 26) {
-    print_list(table[index]);
+    
+    if (list_is_empty(table[index])) {
+      printf("%c:\n", index_to_letter(index));
+      print_list(table[index]);
+    }    
     index++;
   }
 }
 
-void print_shuffle(song_node *library, int num_songs) {
-  srand(time(NULL));
+void print_shuffle(int num_songs) {
+  // srand(time(NULL));
   int songs_printed = 0;
   while(num_songs) {
-    song_node *song = random_song(table[rand() % 26]);
+    int random_list = rand() % 26;
+    while (!list_is_empty(table[random_list])) {
+      random_list = rand() % 26;
+    }
+    song_node *song = random_song(table[random_list]);
     printf("random song %d: %s - %s\n", songs_printed, song -> name, song -> artist);
+    num_songs--;
+    songs_printed++;
   }
  }
 
-song_node * delete_song(song_node *library, char *name, char *artist) {
+song_node * delete_song(char *name, char *artist) {
   song_node *song_location_node = table[letter_to_index(&artist[0])];
   return remove_song(song_location_node, name, artist);
 }
 
-song_node * delete_library(song_node *library) {
+song_node * delete_library() {
   int index = 0;
   while (index < 26) {
-    free_list(table[index]);
+    free(table[index]);
     index++;
   }
 }
